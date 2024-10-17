@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')  # Use environment variable for security
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mmanapel.pythonanywhere.com', 'localhost', '41.135.20.124']
+ALLOWED_HOSTS = ['.pythonanywhere.com']
 
 # Application definition
 
@@ -46,11 +46,12 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_SCHEMA_CLASS': ['rest_framework.schemas.coreapi.AutoSchema'],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 MIDDLEWARE = [
@@ -127,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = '/home/napeletlalo/Capstone_Project/static'
 
 # Media files (if you plan to upload files)
 MEDIA_URL = '/media/'
@@ -158,5 +159,11 @@ LOGGING = {
     },
 }
 
-
-
+# Security settings
+CSRF_TRUSTED_ORIGINS = ['https://napeletlalo.pythonanywhere.com']
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
